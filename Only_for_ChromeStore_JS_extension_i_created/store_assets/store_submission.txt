@@ -1,0 +1,89 @@
+CHROME WEB STORE — SUBMISSION ANSWERS
+Per-Site JavaScript Toggle
+======================================================================
+Open this file in Notepad. Copy each block below directly into the
+matching field in the Chrome Web Store Developer Dashboard > Privacy.
+======================================================================
+
+
+--------------------------------------------------------------------
+FIELD: Single purpose description
+--------------------------------------------------------------------
+Per-Site JavaScript Toggle lets the user allow or block JavaScript on the current website with a single click from the toolbar popup. The setting is applied per host (e.g., www.example.com) using Chrome's built-in content settings, and the active tab is reloaded so the new policy takes effect immediately. The extension does nothing else: no ads, no analytics, no content scripts injected into pages, no remote requests.
+
+
+--------------------------------------------------------------------
+FIELD: activeTab justification
+--------------------------------------------------------------------
+Used only when the user opens the popup, to read the active tab's URL so the extension can show the current hostname and apply the allow/block setting to that exact site. No tab data is stored or transmitted.
+
+
+--------------------------------------------------------------------
+FIELD: contentSettings justification
+--------------------------------------------------------------------
+This is the core API of the extension. chrome.contentSettings.javascript.get reads the current JavaScript policy for the active site so the popup can display whether scripts are allowed or blocked. chrome.contentSettings.javascript.set writes the user's choice (allow or block) for the active site's host pattern when they click the toggle. No other content setting is read or modified.
+
+
+--------------------------------------------------------------------
+FIELD: storage justification
+--------------------------------------------------------------------
+chrome.storage.local is used solely to keep a small, capped (max 50 entries) ring buffer of locally generated diagnostic errors so the user can copy a report and email it to the developer via the "Report a problem" button. The log never leaves the user's browser unless the user manually copies and sends it. No browsing history, URLs, or personal data are stored.
+
+
+--------------------------------------------------------------------
+FIELD: tabs justification
+--------------------------------------------------------------------
+Used to (1) detect when the active tab changes or finishes loading so the toolbar badge can show "OFF" when JavaScript is blocked on that site, and (2) call chrome.tabs.reload on the current tab after the user flips the toggle so the new JavaScript policy takes effect. No tab URLs or contents are stored or sent anywhere.
+
+
+--------------------------------------------------------------------
+FIELD: Host permission justification  (<all_urls>)
+--------------------------------------------------------------------
+A broad host permission is required because chrome.contentSettings.javascript.set will only modify the JavaScript policy for hosts the extension has permission for. Since users may want to toggle JavaScript on any website they visit, the host pattern must cover all URLs. The extension does not inject any scripts, does not read page contents, and does not perform any network requests against these hosts — the permission is used only to scope the contentSettings API call to the active tab's host.
+
+
+--------------------------------------------------------------------
+FIELD: Are you using remote code?
+--------------------------------------------------------------------
+Select: "No, I am not using Remote code"
+(Leave the Justification box blank.)
+
+
+--------------------------------------------------------------------
+FIELD: Data usage — what user data do you collect?
+--------------------------------------------------------------------
+Check NONE of the boxes. The extension collects no user data.
+
+
+--------------------------------------------------------------------
+FIELD: Three certification checkboxes
+--------------------------------------------------------------------
+Check ALL THREE. All are true for this extension:
+  [x] I do not sell or transfer user data to third parties
+  [x] I do not use or transfer user data for unrelated purposes
+  [x] I do not use or transfer user data for creditworthiness/lending
+
+
+--------------------------------------------------------------------
+FIELD: Privacy policy URL
+--------------------------------------------------------------------
+Required because <all_urls> is requested. Host PRIVACY.md publicly,
+then paste the raw URL here. Easiest free options:
+
+  Option A — GitHub repo (recommended)
+    1. Create a public GitHub repo (or use any you already own).
+    2. Upload PRIVACY.md (in this same store_assets folder).
+    3. Click the file > "Raw" button > copy that URL.
+    4. Format will be:
+       https://raw.githubusercontent.com/<user>/<repo>/main/PRIVACY.md
+    5. Test it in an incognito window before pasting.
+
+  Option B — GitHub Pages, Google Sites, Notion (public page), or any
+            other public URL that loads without login.
+
+The reviewer must be able to open the URL without logging in.
+
+
+======================================================================
+END OF SUBMISSION ANSWERS
+======================================================================
